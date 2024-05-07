@@ -6,6 +6,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MaterialList from "./components/tickets/MaterialList";
 import MaterialDetails from "./components/tickets/MaterialDetails";
 import CreateMaterial from "./components/tickets/CreateMaterial";
+import PatronList from "./components/tickets/PatronList";
+import PatronDetails from "./components/tickets/PatronDetails";
+import PatronUpdate from "./components/tickets/PatronUpdate";
+import CheckoutsList from "./components/tickets/CheckoutsList";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -17,6 +21,12 @@ root.render(
           <Route path=":id" element={<MaterialDetails />} />
           <Route path="create" element={<CreateMaterial />} />
         </Route>
+        <Route path="patrons" >
+          <Route index element={<PatronList />}></Route>
+          <Route path=":id" element={<PatronDetails />} />
+          <Route path=":id/update" element={<PatronUpdate />} />
+        </Route>
+        <Route path="checkouts" element={< CheckoutsList />} />
       </Route>
     </Routes>
   </BrowserRouter>,

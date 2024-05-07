@@ -36,6 +36,7 @@ export default function MaterialList() {
               <td>
                 <Link to={`${m.id}`}>Details</Link>
               </td>
+              
             </tr>
           ))}
         </tbody>

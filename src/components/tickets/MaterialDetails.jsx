@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Table } from "reactstrap";
 import { getMaterial } from "../../data/materialsData";
+import { removeMaterialFromCirculation } from "../../data/materialsData";
 
 export default function MaterialDetails() {
   const { id } = useParams();
-
+  const navigate = useNavigate();
   const [material, setMaterial] = useState(null);
 
   //add useEffect here to get the ticket details from the API
@@ -35,6 +36,18 @@ export default function MaterialDetails() {
             <td>
               {material.outOfCirculationSince?.split("T")[0] ||
                 "In Circulation"}
+            </td>
+            
+          </tr>
+          <tr>
+            <th scope ="row">Remove From Circulation</th>
+            <td>
+              {material.outOfCirculationSince == null && (
+                <button 
+                onClick={() => removeMaterialFromCirculation(material.id).then(() => {
+                  navigate("/materials")
+                })}>Remove</button>
+              )}
             </td>
           </tr>
         </tbody>
