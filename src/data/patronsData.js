@@ -16,6 +16,14 @@ export const updatePatron = async (id, patron) => {
     }).then((res) => res.json())
 };
 
+export const deactivatePatron = async (patronId) => {
+    return fetch(`${_apiUrl}/${patronId}/deactivate`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(patronId),
+    }).then((res) => res.json())
+};
+
 
 
 

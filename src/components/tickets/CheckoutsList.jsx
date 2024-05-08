@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Table } from "reactstrap";
-import { getCheckouts, returnCheckout } from "../../data/checkoutsData";
+import { getCheckouts, removeCheckout } from "../../data/checkoutsData";
 import { useNavigate } from "react-router-dom";
 
 
@@ -9,8 +9,12 @@ export default function CheckoutsList() {
     const [checkouts, setCheckouts] = useState([]);
     const navigate = useNavigate();
 
-    useEffect(() => {
+    const getAndResetCheckouts = () => {
         getCheckouts().then(setCheckouts);
+    }
+
+    useEffect(() => {
+        getAndResetCheckouts();
     }, []);
 
 
@@ -38,12 +42,12 @@ export default function CheckoutsList() {
                             <td>{c.patron.firstName} {c.patron.lastName}</td>
                             <td>{c.checkoutDate}</td>
                             <td>
-                                {c.returnDate && !c.outOfCirculationSince && new Date(c.returnDate) < new Date() && (
-                                   <button 
-                                   onClick={() => returnCheckout(c.id).then(() => {
-                                     navigate("/")
-                                   })}>Return Item</button>
-                                )}
+                               
+                                    <button
+                                        onClick={() => removeCheckout(c.id).then(() => {
+                                            navigate(getAndResetCheckouts());
+                                        })}>Return Item</button>
+                                
                             </td>
 
                         </tr>

@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { Table } from "reactstrap";
-import { getPatrons } from "../../data/patronsData";
+import { deactivatePatron, getPatrons } from "../../data/patronsData";
 import { Link } from "react-router-dom";
 
 
 export default function PatronList() {
     const [patrons, setPatrons] = useState([]);
 
-    useEffect(() => {
+    const getAndResetPatrons = () => {
         getPatrons().then(setPatrons);
+    }
+    useEffect(() => {
+        getAndResetPatrons()
     }, []);
 
     return (
@@ -39,7 +42,7 @@ export default function PatronList() {
                             </td>
                             <td>
                                 {p.isActive && (
-                                    <button onClick={() => deactivatePatron(p.id)}>Deactivate</button>
+                                    <button onClick={() => deactivatePatron(p.id).then(getAndResetPatrons())}>Deactivate</button>
                                 )}
                             </td>
                         </tr>
